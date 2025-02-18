@@ -1,0 +1,17 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Correlated Dense Associative Memory OHNN
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Khalid
+    family-names: Musa
+    email: kmusa@stevens.edu
+    affiliation: Stevens Institute of Technology
+repository-code: 'https://github.com/kmusa11/OHNN-CDAM.git'
+license: MIT
+date-released: '2025-02-17'
