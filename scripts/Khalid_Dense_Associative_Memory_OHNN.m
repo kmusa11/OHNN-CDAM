@@ -521,7 +521,7 @@ end
 
 %% Visually compare initial/final spin state with ground truth
 
-trial_num = 1;
+trial_num = 2;
 for j = trial_num:L:n_rep*L
     figure;image(reshape(replicas_eff(j,:,:),[xeff,yeff] ),'CDataMapping','scaled')
     u = ceil(j/L);
