@@ -521,31 +521,33 @@ end
 
 %% Visually compare initial/final spin state with ground truth
 
-trial_num = 2;
+trial_num = 3;
 for j = trial_num:L:n_rep*L
     figure;image(reshape(replicas_eff(j,:,:),[xeff,yeff] ),'CDataMapping','scaled')
-    u = ceil(j/L);
-    title(sprintf('Final state image K=%1.f',u))
-    figure;imagesc(A_digit(:,yeff*(u-1) + 1: yeff*u));
-    title(sprintf('Ground Truth image K=%1.f',u))
+    %u = ceil(j/L);
+    %title(sprintf('Final state image K=%1.f',u))
+    %figure;imagesc(A_digit(:,yeff*(u-1) + 1: yeff*u));
+    %title(sprintf('Ground Truth image K=%1.f',u))
 end
 colorbar
 %%
 % Define the directory to save the files
-saveDir = "C:\Users\SLM2022\Desktop\digits 12-15";
+saveDir = "C:\Users\khali\OHNN-CDAM\OHNN-CDAM\digits 02-21\Replica";
 
 % Ensure the directory exists (create it if it doesn't)
 if ~isfolder(saveDir)
     mkdir(saveDir);
 end
 count = 0;
-
+trial_num = 2;
 % Loop through indices with step size L
-for j = 1:L:n_rep*L
+for j = trial_num:L:n_rep*L
     % Plot the reshaped image from replicas_eff
     figure;
     image(reshape(replicas_eff(j, :, :), [xeff, yeff]), 'CDataMapping', 'scaled');
-    
+    % u = ceil(j/L);
+    % image(A_digit(:,yeff*(u-1) + 1: yeff*u),'CDataMapping', 'scaled')
+
     % Remove axis ticks and labels for cleaner visualization
     axis off;
 
@@ -553,7 +555,7 @@ for j = 1:L:n_rep*L
     % colorbar;
 
     % Generate a dynamic filename based on the iteration number
-    filename = sprintf('Ground Truth Digit %d.png', count);
+    filename = sprintf('Replica 2 %d.png', count);
     count = count + 1;
     % Full path to save the file
     fullPath = fullfile(saveDir, filename);
