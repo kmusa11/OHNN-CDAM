@@ -385,9 +385,18 @@ for i = 1: n_rep
 
 close(wb)
 toc
+%% Save Results
+date_str = datestr(now, 'mm-dd-yy');
+num_bodies = 4;
+folder_name = sprintf('C:/Users/SLM2022/Desktop/Khalid/Dense Associative Memory/hybrid data/DAM Random Correlated Patterns/%d%% Correlation', round(bound*100));
+
+filename = sprintf('%s-%dbod-%dP-%dR-%dB-%.1fRand-%.2fCorr-1.0RB-CORR.mat', ...
+    date_str, num_bodies, K, n_rep, L, 1-Bluriness, bound);
+
+% Save data
+save(fullfile(folder_name, filename));
 
 %% Intensity Plot
-
 figure;
 hold on;
 colors = lines(n_rep * L); % Generate distinct colors for each curve
@@ -397,8 +406,8 @@ for j = 1:n_rep * L
     % Plot each line with a distinct color and marker
     plot(I_rep(j, 2: end ), 'Color', colors(mod(j-1, size(colors, 1)) + 1, :), 'DisplayName', sprintf('Curve %d', j));
     
-    % Update legend entries only for the first 5 curves to avoid clutter
-    if j <= 5
+    % Update legend entries only for the first 20 curves to avoid clutter
+    if j <= 20
         str{j} = sprintf('Curve %d', j);
     end
 end
@@ -412,7 +421,6 @@ title(sprintf('Intensity for %d replicas', n_rep));
 grid on;
 
 %% Intensity for Each Pattern
-
 figure;
 hold on;
 colors = lines(K); % Generate distinct colors for each pattern
@@ -508,10 +516,11 @@ trial_num = 2;
 for j = trial_num:L:n_rep*L
     figure;image(reshape(replicas_eff(j,:,:),[xeff,yeff] ),'CDataMapping','scaled')
     set(gca,'LooseInset',get(gca,'TightInset'))
-    u = ceil(j/L);
-    title(sprintf('Final state image K=%1.f',u))
-    figure;imagesc(A_digit(:,yeff*(u-1) + 1: yeff*u));
-    title(sprintf('Ground Truth image K=%1.f',u))
+    
+    %u = ceil(j/L);
+    %title(sprintf('Final state image K=%1.f',u))
+    %figure;imagesc(A_digit(:,yeff*(u-1) + 1: yeff*u));
+    %title(sprintf('Ground Truth image K=%1.f',u))
 end
 colorbar
 %%
@@ -586,7 +595,6 @@ end
     exportgraphics(gcf, fullPath, 'Resolution', 300, 'BackgroundColor', 'none');
 
 %% m-parameter (overlap matrix)
-
 Retrieve = zeros(1,L);
 correlation = zeros(1,L);
 temp1 = zeros(K,xeff*yeff);
