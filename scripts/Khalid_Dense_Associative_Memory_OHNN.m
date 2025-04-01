@@ -491,7 +491,7 @@ end
 replicas = zeros(n_rep*L,macro1*macro1);
 
 for j=1:n_rep*L
-    replicas(j,:) = Allspins_tem((j-1)*macro1*macro1 +1 :j*macro1*macro1,1); 
+    replicas(j,:) = Allspins_tem((j-1)*macro1*macro1 +1 :j*macro1*macro1,end); 
 end 
 
 replicas_mat_eff = zeros(n_rep*L,xeff,yeff);
@@ -504,7 +504,7 @@ end
 
 %% Visually compare initial/final spin state with ground truth
 
-trial_num = 2;
+trial_num = 5;
 for j = trial_num:L:n_rep*L
     figure;image(reshape(replicas_eff(j,:,:),[xeff,yeff] ),'CDataMapping','scaled')
     set(gca,'LooseInset',get(gca,'TightInset'))
@@ -516,7 +516,7 @@ end
 colorbar
 %%
 % Define the directory to save the files
-saveDir = "C:\Users\khali\OHNN-CDAM\digits 02-23\Initial";
+saveDir = "C:\Users\khali\OHNN-CDAM\digits 02-27\4-body\Initial";
 
 % Ensure the directory exists (create it if it doesn't)
 if ~isfolder(saveDir)
@@ -525,14 +525,14 @@ end
 
 count = 0;
 trial_num = 1;
-
+n_rep = 15;
 % Loop through indices with step size L
 for j = trial_num:L:n_rep*L
     % Plot the reshaped image from replicas_eff
     figure;
     image(reshape(replicas_eff(j, :, :), [xeff, yeff]), 'CDataMapping', ...
     'scaled');
-    % 
+
     % u = ceil(j/L);
     % image(A_digit(:,yeff*(u-1) + 1: yeff*u),'CDataMapping', 'scaled')
 
@@ -591,7 +591,7 @@ Retrieve = zeros(1,L);
 correlation = zeros(1,L);
 temp1 = zeros(K,xeff*yeff);
 %threshold =  0.6; % use if patterns are orthogonal/hadamard
-threshold =  0.25; % use if patterns are correlated
+threshold =  0.22; % use if patterns are correlated
 
 % Reshape patterns
 for k = 1:K
