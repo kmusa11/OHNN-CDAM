@@ -1,5 +1,5 @@
-%% Simulating Dense Associative Memory in OHNN
-%  Last Modified 01/12/2025
+%% Simulating Dense Associative Memory in NOHNN
+%  Last Modified 05/15/2025
 %  Khalid Musa
 
 
@@ -320,7 +320,7 @@ close(wb)
 
 %% Monte Carlo Initial Parameters   
 
-iterations = 72; % number of iterations
+iterations = 100; % number of iterations
 K=25; % number of stored patterns
 Ifirst = 0;
 t2 = 200; % scaling coefficient of the SHG power
@@ -338,6 +338,7 @@ hamming_dist = zeros(n_rep,K);
 
 estimated_run_time = iterations * K * n_rep * L * 0.7857 / 3600; % 785.7 ms/iteration          
 disp(strcat("run time = ", num2str(estimated_run_time)," hours"))
+
 %% Monte Carlo Run
 
 tic
@@ -485,7 +486,6 @@ end
 
 
 %% Post Processing Data
-
 %% Create and filter Replicas (Final spin state)
 
 replicas = zeros(n_rep*L,macro1*macro1);
@@ -504,86 +504,22 @@ end
 
 %% Visually compare initial/final spin state with ground truth
 
-trial_num = 5;
+trial_num = 1;
 for j = trial_num:L:n_rep*L
     figure;image(reshape(replicas_eff(j,:,:),[xeff,yeff] ),'CDataMapping','scaled')
+    axis off
     set(gca,'LooseInset',get(gca,'TightInset'))
     u = ceil(j/L);
-    title(sprintf('Final state image K=%1.f',u))
     figure;imagesc(A_digit(:,yeff*(u-1) + 1: yeff*u));
-    title(sprintf('Ground Truth image K=%1.f',u))
-end
-colorbar
-%%
-% Define the directory to save the files
-saveDir = "C:\Users\khali\OHNN-CDAM\digits 02-27\4-body\Initial";
-
-% Ensure the directory exists (create it if it doesn't)
-if ~isfolder(saveDir)
-    mkdir(saveDir);
-end
-
-count = 0;
-trial_num = 1;
-n_rep = 15;
-% Loop through indices with step size L
-for j = trial_num:L:n_rep*L
-    % Plot the reshaped image from replicas_eff
-    figure;
-    image(reshape(replicas_eff(j, :, :), [xeff, yeff]), 'CDataMapping', ...
-    'scaled');
-
-    % u = ceil(j/L);
-    % image(A_digit(:,yeff*(u-1) + 1: yeff*u),'CDataMapping', 'scaled')
-
-    % Remove axis ticks and labels for cleaner visualization
-    axis off;
-
-    % Generate a dynamic filename based on the iteration number
-    filename = sprintf('Initial %d.png', count);
-    count = count + 1;
-
-    % Full path to save the file
-    fullPath = fullfile(saveDir, filename);
-    set(gca, 'LooseInset', get(gca, 'TightInset'));
-
-    % Set figure and axes background to transparent
-    set(gca, 'Color', 'none');
+    set(gca,'LooseInset',get(gca,'TightInset'))
     
-    % Save the figure to the specified directory
-    exportgraphics(gcf, fullPath, 'Resolution', 200, 'BackgroundColor', 'none');
-
-    % Optional: Close the figure after saving
-    close;
-end
-
-%%
-
-% Define the directory to save the files
-saveDir = "C:\Users\khali\OHNN-CDAM\digits 02-23";
-filename = sprintf('grating.png');
-
-% Ensure the directory exists (create it if it doesn't)
-if ~isfolder(saveDir)
-    mkdir(saveDir);
-end
-
-
-
-% Plot the reshaped image from replicas_eff
-    figure;
-    image(grating, 'CDataMapping', ...
-    'scaled');
     axis off
-% Full path to save the file
-    fullPath = fullfile(saveDir, filename);
+
     set(gca, 'LooseInset', get(gca, 'TightInset'));
 
     % Set figure and axes background to transparent
     set(gca, 'Color', 'none');
-    
-    % Save the figure to the specified directory
-    exportgraphics(gcf, fullPath, 'Resolution', 300, 'BackgroundColor', 'none');
+end
 
 %% m-parameter (overlap matrix)
 
